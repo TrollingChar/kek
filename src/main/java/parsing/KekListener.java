@@ -38,6 +38,16 @@ public interface KekListener extends ParseTreeListener {
 	 */
 	void exitExpression(KekParser.ExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link KekParser#prefix_operator}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrefix_operator(KekParser.Prefix_operatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#prefix_operator}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrefix_operator(KekParser.Prefix_operatorContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link KekParser#multiplicative_operator}.
 	 * @param ctx the parse tree
 	 */
@@ -57,4 +67,44 @@ public interface KekListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAdditive_operator(KekParser.Additive_operatorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KekParser#shift_operator}.
+	 * @param ctx the parse tree
+	 */
+	void enterShift_operator(KekParser.Shift_operatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#shift_operator}.
+	 * @param ctx the parse tree
+	 */
+	void exitShift_operator(KekParser.Shift_operatorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KekParser#comparison_operator}.
+	 * @param ctx the parse tree
+	 */
+	void enterComparison_operator(KekParser.Comparison_operatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#comparison_operator}.
+	 * @param ctx the parse tree
+	 */
+	void exitComparison_operator(KekParser.Comparison_operatorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KekParser#equality_operator}.
+	 * @param ctx the parse tree
+	 */
+	void enterEquality_operator(KekParser.Equality_operatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#equality_operator}.
+	 * @param ctx the parse tree
+	 */
+	void exitEquality_operator(KekParser.Equality_operatorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KekParser#bitwise_operator}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitwise_operator(KekParser.Bitwise_operatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#bitwise_operator}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitwise_operator(KekParser.Bitwise_operatorContext ctx);
 }

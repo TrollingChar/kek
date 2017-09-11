@@ -20,8 +20,8 @@ expression returns[lang.expr.Expression expr]
 :   '(' e=expression ')'
     { $expr = $e.expr; }
 
-|   '-' e=expression
-    { $expr = lang.expr.Expression.operator(lang.Operator.UNARY_MINUS, $e.expr); }
+|   prop=prefix_operator e=expression
+    { $expr = lang.expr.Expression.operator($prop.op, $e.expr); }
 
 |   <assoc=right> l=expression '**' r=expression
     { $expr = lang.expr.Expression.operator(lang.Operator.EXPONENT, $l.expr, $r.expr); }
@@ -31,6 +31,24 @@ expression returns[lang.expr.Expression expr]
 
 |   l=expression aop=additive_operator r=expression
     { $expr = lang.expr.Expression.operator($aop.op, $l.expr, $r.expr); }
+
+|   l=expression sop=shift_operator r=expression
+    { $expr = lang.expr.Expression.operator($sop.op, $l.expr, $r.expr); }
+
+|   l=expression cop=comparison_operator r=expression
+    { $expr = lang.expr.Expression.operator($cop.op, $l.expr, $r.expr); }
+
+|   l=expression eop=equality_operator r=expression
+    { $expr = lang.expr.Expression.operator($eop.op, $l.expr, $r.expr); }
+
+|   l=expression bop=bitwise_operator r=expression
+    { $expr = lang.expr.Expression.operator($bop.op, $l.expr, $r.expr); }
+
+|   <assoc=right> l=expression '&&' r=expression
+    { $expr = lang.expr.Expression.operator(lang.Operator.AND, $l.expr, $r.expr); }
+
+|   <assoc=right> l=expression '||' r=expression
+    { $expr = lang.expr.Expression.operator(lang.Operator.OR, $l.expr, $r.expr); }
 
 |   <assoc=right> ID '=' e=expression
     { $expr = lang.expr.Expression.setter($ID.getText(), $e.expr); }
@@ -47,9 +65,21 @@ expression returns[lang.expr.Expression expr]
 
 
 
+prefix_operator returns[lang.Operator op]
+:   '+'  { $op = lang.Operator.UNARY_PLUS; }
+|   '-'  { $op = lang.Operator.UNARY_MINUS; }
+|   '!'  { $op = lang.Operator.NOT; }
+|   '~'  { $op = lang.Operator.BIT_NOT; }
+|   '++' { $op = lang.Operator.PRE_INC; }
+|   '--' { $op = lang.Operator.PRE_DEC; }
+;
+
+
+
 multiplicative_operator returns[lang.Operator op]
 :   '*' { $op = lang.Operator.MULTIPLY; }
 |   '/' { $op = lang.Operator.DIVIDE; }
+|   '%' { $op = lang.Operator.REMNANT; }
 ;
 
 
@@ -61,7 +91,39 @@ additive_operator returns[lang.Operator op]
 
 
 
-ID : [a-z] ; // [a-zA-Z_]+ [a-zA-Z0-9_]* ;
+shift_operator returns[lang.Operator op]
+:   '<<' { $op = lang.Operator.LEFT_SHIFT; }
+|   '>>' { $op = lang.Operator.RIGHT_SHIFT; }
+;
+
+
+
+comparison_operator returns[lang.Operator op]
+:   '<'  { $op = lang.Operator.LESS; }
+|   '>'  { $op = lang.Operator.GREATER; }
+|   '<=' { $op = lang.Operator.LESS_EQUAL; }
+|   '>=' { $op = lang.Operator.GREATER_EQUAL; }
+;
+
+
+
+equality_operator returns[lang.Operator op]
+:   '==' { $op = lang.Operator.EQUAL; }
+|   '!=' { $op = lang.Operator.NOT_EQUAL; }
+;
+
+
+
+bitwise_operator returns[lang.Operator op]
+:   '&'  { $op = lang.Operator.BIT_AND; }
+|   '|'  { $op = lang.Operator.BIT_OR; }
+|   '^'  { $op = lang.Operator.BIT_XOR; }
+|   '&^' { $op = lang.Operator.BIT_CLEAR; }
+;
+
+
+
+ID : [a-zA-Z_]+ [a-zA-Z0-9_]* ;
 INT : [0-9]+ ;
 
 WS : [ \t\n\r]+ -> channel(HIDDEN) ;
