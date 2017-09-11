@@ -52,7 +52,17 @@ expression returns[lang.expr.Expression expr]
 |   <assoc=right> l=expression '||' r=expression
     { $expr = lang.expr.Expression.operator(lang.Operator.OR, $l.expr, $r.expr); }
 
-|   <assoc=right> primary_expression '=' e=expression
+|   <assoc=right> primary_expression '.' ID '=' e=expression
+    /*
+    velocity.x = 0;
+    getVelocity().x = 0;
+    (kekOut << "KEK").ok = true;
+    */
+
+|   <assoc=right> ID '=' e=expression
+    { $expr = lang.expr.Expression.setter($ID.getText(), $e.expr); }
+
+|   <assoc=right> ID ':=' e=expression
     { $expr = lang.expr.Expression.setter($ID.getText(), $e.expr); }
 
 //|   <assoc=right> ID ':=' e=expression

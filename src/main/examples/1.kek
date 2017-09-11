@@ -38,4 +38,13 @@ and all these
     primary_expression  '.'  ID  ('+=' | '-=' ...)  expression
 must be parsed as usual
 
+
+accessing such as a[0] should also be assignable, btw.
+
+
+but invocations - a() - should not.
+
+
+also, there are ++ and -- which also should trigger getters and setters
+
 */
