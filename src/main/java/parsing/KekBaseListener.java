@@ -52,6 +52,18 @@ public class KekBaseListener implements KekListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPrimary_expression(KekParser.Primary_expressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrimary_expression(KekParser.Primary_expressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPrefix_operator(KekParser.Prefix_operatorContext ctx) { }
 	/**
 	 * {@inheritDoc}

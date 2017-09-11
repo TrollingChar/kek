@@ -17,8 +17,10 @@ statement returns[lang.Statement stmt]
 
 
 expression returns[lang.expr.Expression expr]
-:   '(' e=expression ')'
-    { $expr = $e.expr; }
+:   primary_expression
+
+//|   e=expression '.' ID
+//    { $expr = lang.expr.Expression.memberAccess($e.expr, $ID.getText()); }
 
 |   prop=prefix_operator e=expression
     { $expr = lang.expr.Expression.operator($prop.op, $e.expr); }
@@ -50,11 +52,25 @@ expression returns[lang.expr.Expression expr]
 |   <assoc=right> l=expression '||' r=expression
     { $expr = lang.expr.Expression.operator(lang.Operator.OR, $l.expr, $r.expr); }
 
-|   <assoc=right> ID '=' e=expression
+|   <assoc=right> primary_expression '=' e=expression
     { $expr = lang.expr.Expression.setter($ID.getText(), $e.expr); }
 
 //|   <assoc=right> ID ':=' e=expression
 //    { $expr = new ($ID.getText(), $e.expr); }
+;
+
+
+
+primary_expression returns[lang.expr.Expression expr]
+:   '(' e=expression ')'
+    { $expr = $e.expr; }
+
+|   primary_expression '.' ID
+|   primary_expression '?.' ID
+|   primary_expression '(' expression_list? ')'
+|   primary_expression '?(' expression_list? ')'
+|   primary_expression '[' expression_list? ']'
+|   primary_expression '?[' expression_list? ']'
 
 |   ID
     { $expr = lang.expr.Expression.getter($ID.getText()); }

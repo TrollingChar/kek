@@ -26,5 +26,9 @@ public abstract class Expression {
     public static Expression operator(Operator operator, Expression ... operands) {
         return new OperatorExpression(operator, operands);
     }
+
+    public static Expression memberAccess(Expression expr, String member) {
+        return new MemberAccessExpression(expr, member);
+    }
 }
 
