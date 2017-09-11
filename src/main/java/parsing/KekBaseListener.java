@@ -1,4 +1,4 @@
-// Generated from C:/Users/Dima/IdeaProjects/kek/src/main/grammar\Kek.g4 by ANTLR 4.7
+// Generated from D:/fun/kek/src/main/grammar\Kek.g4 by ANTLR 4.7
 package parsing;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -47,6 +47,30 @@ public class KekBaseListener implements KekListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExpression(KekParser.ExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMultiplicative_operator(KekParser.Multiplicative_operatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMultiplicative_operator(KekParser.Multiplicative_operatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAdditive_operator(KekParser.Additive_operatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAdditive_operator(KekParser.Additive_operatorContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

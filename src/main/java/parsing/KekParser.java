@@ -1,4 +1,4 @@
-// Generated from C:/Users/Dima/IdeaProjects/kek/src/main/grammar\Kek.g4 by ANTLR 4.7
+// Generated from D:/fun/kek/src/main/grammar\Kek.g4 by ANTLR 4.7
 package parsing;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -18,20 +18,20 @@ public class KekParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, ID=11, INT=12, WS=13, COMMENT=14, LINE_COMMENT=15;
+		ID=10, INT=11, WS=12, COMMENT=13, LINE_COMMENT=14;
 	public static final int
-		RULE_file = 0, RULE_statement = 1, RULE_expression = 2;
+		RULE_file = 0, RULE_statement = 1, RULE_expression = 2, RULE_multiplicative_operator = 3, 
+		RULE_additive_operator = 4;
 	public static final String[] ruleNames = {
-		"file", "statement", "expression"
+		"file", "statement", "expression", "multiplicative_operator", "additive_operator"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "';'", "'('", "')'", "'-'", "'**'", "'*'", "'/'", "'+'", "'='", 
-		"':='"
+		null, "';'", "'('", "')'", "'-'", "'**'", "'='", "'*'", "'/'", "'+'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, null, null, null, null, "ID", 
-		"INT", "WS", "COMMENT", "LINE_COMMENT"
+		null, null, null, null, null, null, null, null, null, null, "ID", "INT", 
+		"WS", "COMMENT", "LINE_COMMENT"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -111,21 +111,21 @@ public class KekParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(9);
+			setState(13);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__3) | (1L << ID) | (1L << INT))) != 0)) {
 				{
 				{
-				setState(6);
+				setState(10);
 				statement();
 				}
 				}
-				setState(11);
+				setState(15);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(12);
+			setState(16);
 			match(EOF);
 			}
 		}
@@ -141,6 +141,8 @@ public class KekParser extends Parser {
 	}
 
 	public static class StatementContext extends ParserRuleContext {
+		public lang.Statement stmt;
+		public ExpressionContext e;
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -164,10 +166,11 @@ public class KekParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(14);
-			expression(0);
-			setState(15);
+			setState(18);
+			((StatementContext)_localctx).e = expression(0);
+			setState(19);
 			match(T__0);
+			 ((StatementContext)_localctx).stmt =  new lang.Statement(((StatementContext)_localctx).e.expr); 
 			}
 		}
 		catch (RecognitionException re) {
@@ -182,13 +185,14 @@ public class KekParser extends Parser {
 	}
 
 	public static class ExpressionContext extends ParserRuleContext {
-		public lang.Expression expr;
+		public lang.expr.Expression expr;
 		public ExpressionContext l;
 		public ExpressionContext e;
 		public Token ID;
 		public Token INT;
 		public ExpressionContext r;
-		public Token op;
+		public Multiplicative_operatorContext mop;
+		public Additive_operatorContext aop;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -197,6 +201,12 @@ public class KekParser extends Parser {
 		}
 		public TerminalNode ID() { return getToken(KekParser.ID, 0); }
 		public TerminalNode INT() { return getToken(KekParser.INT, 0); }
+		public Multiplicative_operatorContext multiplicative_operator() {
+			return getRuleContext(Multiplicative_operatorContext.class,0);
+		}
+		public Additive_operatorContext additive_operator() {
+			return getRuleContext(Additive_operatorContext.class,0);
+		}
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -222,7 +232,6 @@ public class KekParser extends Parser {
 		ExpressionContext _prevctx = _localctx;
 		int _startState = 4;
 		enterRecursionRule(_localctx, 4, RULE_expression, _p);
-		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
@@ -232,58 +241,47 @@ public class KekParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				{
-				setState(18);
+				setState(23);
 				match(T__1);
-				setState(19);
+				setState(24);
 				((ExpressionContext)_localctx).e = expression(0);
-				setState(20);
+				setState(25);
 				match(T__2);
 				 ((ExpressionContext)_localctx).expr =  ((ExpressionContext)_localctx).e.expr; 
 				}
 				break;
 			case 2:
 				{
-				setState(23);
+				setState(28);
 				match(T__3);
-				setState(24);
-				((ExpressionContext)_localctx).e = expression(8);
-				 ((ExpressionContext)_localctx).expr =  lang.Expression.prefix(((ExpressionContext)_localctx).e.expr, "-"); 
+				setState(29);
+				((ExpressionContext)_localctx).e = expression(7);
+				 ((ExpressionContext)_localctx).expr =  lang.expr.Expression.operator(lang.Operator.UNARY_MINUS, ((ExpressionContext)_localctx).e.expr); 
 				}
 				break;
 			case 3:
 				{
-				setState(27);
+				setState(32);
 				((ExpressionContext)_localctx).ID = match(ID);
-				setState(28);
-				match(T__8);
-				setState(29);
-				((ExpressionContext)_localctx).e = expression(4);
-				 ((ExpressionContext)_localctx).expr =  lang.Expression.assignment(((ExpressionContext)_localctx).ID.getText(), ((ExpressionContext)_localctx).e.expr); 
+				setState(33);
+				match(T__5);
+				setState(34);
+				((ExpressionContext)_localctx).e = expression(3);
+				 ((ExpressionContext)_localctx).expr =  lang.expr.Expression.setter(((ExpressionContext)_localctx).ID.getText(), ((ExpressionContext)_localctx).e.expr); 
 				}
 				break;
 			case 4:
 				{
-				setState(32);
+				setState(37);
 				((ExpressionContext)_localctx).ID = match(ID);
-				setState(33);
-				match(T__9);
-				setState(34);
-				((ExpressionContext)_localctx).e = expression(3);
-				 ((ExpressionContext)_localctx).expr =  lang.Expression.declaration(((ExpressionContext)_localctx).ID.getText(), ((ExpressionContext)_localctx).e.expr); 
+				 ((ExpressionContext)_localctx).expr =  lang.expr.Expression.getter(((ExpressionContext)_localctx).ID.getText()); 
 				}
 				break;
 			case 5:
 				{
-				setState(37);
-				((ExpressionContext)_localctx).ID = match(ID);
-				 ((ExpressionContext)_localctx).expr =  lang.Expression.identifier(((ExpressionContext)_localctx).ID.getText()); 
-				}
-				break;
-			case 6:
-				{
 				setState(39);
 				((ExpressionContext)_localctx).INT = match(INT);
-				 ((ExpressionContext)_localctx).expr =  lang.Expression.number(((ExpressionContext)_localctx).INT.getText()); 
+				 ((ExpressionContext)_localctx).expr =  lang.expr.Expression.constant(((ExpressionContext)_localctx).INT.getText()); 
 				}
 				break;
 			}
@@ -306,12 +304,12 @@ public class KekParser extends Parser {
 						_localctx.l = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(43);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(44);
 						match(T__4);
 						setState(45);
-						((ExpressionContext)_localctx).r = expression(7);
-						 ((ExpressionContext)_localctx).expr =  lang.Expression.binary(((ExpressionContext)_localctx).l.expr, ((ExpressionContext)_localctx).r.expr, "**"); 
+						((ExpressionContext)_localctx).r = expression(6);
+						 ((ExpressionContext)_localctx).expr =  lang.expr.Expression.operator(lang.Operator.EXPONENT, ((ExpressionContext)_localctx).l.expr, ((ExpressionContext)_localctx).r.expr); 
 						}
 						break;
 					case 2:
@@ -321,21 +319,12 @@ public class KekParser extends Parser {
 						_localctx.l = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(48);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(49);
-						((ExpressionContext)_localctx).op = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(_la==T__5 || _la==T__6) ) {
-							((ExpressionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
+						((ExpressionContext)_localctx).mop = multiplicative_operator();
 						setState(50);
-						((ExpressionContext)_localctx).r = expression(7);
-						 ((ExpressionContext)_localctx).expr =  lang.Expression.binary(((ExpressionContext)_localctx).l.expr, ((ExpressionContext)_localctx).r.expr, ((ExpressionContext)_localctx).op.getText()); 
+						((ExpressionContext)_localctx).r = expression(6);
+						 ((ExpressionContext)_localctx).expr =  lang.expr.Expression.operator(((ExpressionContext)_localctx).mop.op, ((ExpressionContext)_localctx).l.expr, ((ExpressionContext)_localctx).r.expr); 
 						}
 						break;
 					case 3:
@@ -345,21 +334,12 @@ public class KekParser extends Parser {
 						_localctx.l = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(53);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(54);
-						((ExpressionContext)_localctx).op = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(_la==T__3 || _la==T__7) ) {
-							((ExpressionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
+						((ExpressionContext)_localctx).aop = additive_operator();
 						setState(55);
-						((ExpressionContext)_localctx).r = expression(6);
-						 ((ExpressionContext)_localctx).expr =  lang.Expression.binary(((ExpressionContext)_localctx).l.expr, ((ExpressionContext)_localctx).r.expr, ((ExpressionContext)_localctx).op.getText()); 
+						((ExpressionContext)_localctx).r = expression(5);
+						 ((ExpressionContext)_localctx).expr =  lang.expr.Expression.operator(((ExpressionContext)_localctx).aop.op, ((ExpressionContext)_localctx).l.expr, ((ExpressionContext)_localctx).r.expr); 
 						}
 						break;
 					}
@@ -382,6 +362,114 @@ public class KekParser extends Parser {
 		return _localctx;
 	}
 
+	public static class Multiplicative_operatorContext extends ParserRuleContext {
+		public lang.Operator op;
+		public Multiplicative_operatorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_multiplicative_operator; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof KekListener ) ((KekListener)listener).enterMultiplicative_operator(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof KekListener ) ((KekListener)listener).exitMultiplicative_operator(this);
+		}
+	}
+
+	public final Multiplicative_operatorContext multiplicative_operator() throws RecognitionException {
+		Multiplicative_operatorContext _localctx = new Multiplicative_operatorContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_multiplicative_operator);
+		try {
+			setState(67);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case T__6:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(63);
+				match(T__6);
+				 ((Multiplicative_operatorContext)_localctx).op =  lang.Operator.MULTIPLY; 
+				}
+				break;
+			case T__7:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(65);
+				match(T__7);
+				 ((Multiplicative_operatorContext)_localctx).op =  lang.Operator.DIVIDE; 
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Additive_operatorContext extends ParserRuleContext {
+		public lang.Operator op;
+		public Additive_operatorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_additive_operator; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof KekListener ) ((KekListener)listener).enterAdditive_operator(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof KekListener ) ((KekListener)listener).exitAdditive_operator(this);
+		}
+	}
+
+	public final Additive_operatorContext additive_operator() throws RecognitionException {
+		Additive_operatorContext _localctx = new Additive_operatorContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_additive_operator);
+		try {
+			setState(73);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case T__8:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(69);
+				match(T__8);
+				 ((Additive_operatorContext)_localctx).op =  lang.Operator.ADD; 
+				}
+				break;
+			case T__3:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(71);
+				match(T__3);
+				 ((Additive_operatorContext)_localctx).op =  lang.Operator.SUBTRACT; 
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
 		case 2:
@@ -392,34 +480,36 @@ public class KekParser extends Parser {
 	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 7);
-		case 1:
 			return precpred(_ctx, 6);
-		case 2:
+		case 1:
 			return precpred(_ctx, 5);
+		case 2:
+			return precpred(_ctx, 4);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\21B\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\3\2\7\2\n\n\2\f\2\16\2\r\13\2\3\2\3\2\3\3\3\3\3\3\3\4\3\4\3"+
-		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\3\4\3\4\5\4,\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\3\4\3\4\7\4=\n\4\f\4\16\4@\13\4\3\4\2\3\6\5\2\4\6\2\4\3\2\b\t"+
-		"\4\2\6\6\n\n\2G\2\13\3\2\2\2\4\20\3\2\2\2\6+\3\2\2\2\b\n\5\4\3\2\t\b\3"+
-		"\2\2\2\n\r\3\2\2\2\13\t\3\2\2\2\13\f\3\2\2\2\f\16\3\2\2\2\r\13\3\2\2\2"+
-		"\16\17\7\2\2\3\17\3\3\2\2\2\20\21\5\6\4\2\21\22\7\3\2\2\22\5\3\2\2\2\23"+
-		"\24\b\4\1\2\24\25\7\4\2\2\25\26\5\6\4\2\26\27\7\5\2\2\27\30\b\4\1\2\30"+
-		",\3\2\2\2\31\32\7\6\2\2\32\33\5\6\4\n\33\34\b\4\1\2\34,\3\2\2\2\35\36"+
-		"\7\r\2\2\36\37\7\13\2\2\37 \5\6\4\6 !\b\4\1\2!,\3\2\2\2\"#\7\r\2\2#$\7"+
-		"\f\2\2$%\5\6\4\5%&\b\4\1\2&,\3\2\2\2\'(\7\r\2\2(,\b\4\1\2)*\7\16\2\2*"+
-		",\b\4\1\2+\23\3\2\2\2+\31\3\2\2\2+\35\3\2\2\2+\"\3\2\2\2+\'\3\2\2\2+)"+
-		"\3\2\2\2,>\3\2\2\2-.\f\t\2\2./\7\7\2\2/\60\5\6\4\t\60\61\b\4\1\2\61=\3"+
-		"\2\2\2\62\63\f\b\2\2\63\64\t\2\2\2\64\65\5\6\4\t\65\66\b\4\1\2\66=\3\2"+
-		"\2\2\678\f\7\2\289\t\3\2\29:\5\6\4\b:;\b\4\1\2;=\3\2\2\2<-\3\2\2\2<\62"+
-		"\3\2\2\2<\67\3\2\2\2=@\3\2\2\2><\3\2\2\2>?\3\2\2\2?\7\3\2\2\2@>\3\2\2"+
-		"\2\6\13+<>";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\20N\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\7\2\16\n\2\f\2\16\2\21\13\2\3\2\3\2\3\3"+
+		"\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
+		"\4\3\4\3\4\3\4\3\4\5\4,\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
+		"\4\3\4\3\4\3\4\3\4\7\4=\n\4\f\4\16\4@\13\4\3\5\3\5\3\5\3\5\5\5F\n\5\3"+
+		"\6\3\6\3\6\3\6\5\6L\n\6\3\6\2\3\6\7\2\4\6\b\n\2\2\2R\2\17\3\2\2\2\4\24"+
+		"\3\2\2\2\6+\3\2\2\2\bE\3\2\2\2\nK\3\2\2\2\f\16\5\4\3\2\r\f\3\2\2\2\16"+
+		"\21\3\2\2\2\17\r\3\2\2\2\17\20\3\2\2\2\20\22\3\2\2\2\21\17\3\2\2\2\22"+
+		"\23\7\2\2\3\23\3\3\2\2\2\24\25\5\6\4\2\25\26\7\3\2\2\26\27\b\3\1\2\27"+
+		"\5\3\2\2\2\30\31\b\4\1\2\31\32\7\4\2\2\32\33\5\6\4\2\33\34\7\5\2\2\34"+
+		"\35\b\4\1\2\35,\3\2\2\2\36\37\7\6\2\2\37 \5\6\4\t !\b\4\1\2!,\3\2\2\2"+
+		"\"#\7\f\2\2#$\7\b\2\2$%\5\6\4\5%&\b\4\1\2&,\3\2\2\2\'(\7\f\2\2(,\b\4\1"+
+		"\2)*\7\r\2\2*,\b\4\1\2+\30\3\2\2\2+\36\3\2\2\2+\"\3\2\2\2+\'\3\2\2\2+"+
+		")\3\2\2\2,>\3\2\2\2-.\f\b\2\2./\7\7\2\2/\60\5\6\4\b\60\61\b\4\1\2\61="+
+		"\3\2\2\2\62\63\f\7\2\2\63\64\5\b\5\2\64\65\5\6\4\b\65\66\b\4\1\2\66=\3"+
+		"\2\2\2\678\f\6\2\289\5\n\6\29:\5\6\4\7:;\b\4\1\2;=\3\2\2\2<-\3\2\2\2<"+
+		"\62\3\2\2\2<\67\3\2\2\2=@\3\2\2\2><\3\2\2\2>?\3\2\2\2?\7\3\2\2\2@>\3\2"+
+		"\2\2AB\7\t\2\2BF\b\5\1\2CD\7\n\2\2DF\b\5\1\2EA\3\2\2\2EC\3\2\2\2F\t\3"+
+		"\2\2\2GH\7\13\2\2HL\b\6\1\2IJ\7\6\2\2JL\b\6\1\2KG\3\2\2\2KI\3\2\2\2L\13"+
+		"\3\2\2\2\b\17+<>EK";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

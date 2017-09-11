@@ -9,11 +9,12 @@ import java.io.IOException;
 
 public class Program {
     public static void main(String[] args) {
+        test("src/main/examples/1.kek");
     }
 
     private static void test(String fileName) {
         try {
-            KekLexer lexer = new KekLexer(CharStreams.fromFileName("src/main/kek/" + fileName + ".kek"));
+            KekLexer lexer = new KekLexer(CharStreams.fromFileName(fileName));
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             KekParser parser = new KekParser(tokens);
             ParseTree tree = parser.file();
