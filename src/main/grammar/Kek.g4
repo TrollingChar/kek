@@ -16,37 +16,63 @@ file
 
 
 statement returns[lang.Statement stmt]
+:   expression_statement
+    { $stmt = $expression_statement.stmt; }
+
+|   if_statement
+    { $stmt = if_statement.stmt; }
+
+|   while_statement
+    { $stmt = while_statement.stmt; }
+
+|   do_statement
+    { $stmt = do_statement.stmt; }
+
+|   for_statement
+    { $stmt = for_statement.stmt; }
+
+|   empty_statement
+    { $stmt = lang.Statement.empty(); }
+
+|   block
+    { $stmt = $block.stmt; }
+
+;
+
+
+
+expression_statement returns[lang.Statement stmt]
 :   e=expression ';'
     { $stmt = new lang.Statement($e.expr); }
 ;
 
 
 
-if_statement
+if_statement returns[lang.Statement stmt]
 :   'if' '(' (expression_list ';')? expression ')' statement ('else' statement)?
 ;
 
 
 
-switch_statement
-:   todo
-;
+//switch_statement returns[lang.Statement stmt]
+//:   todo
+//;
 
 
 
-while_statement
+while_statement returns[lang.Statement stmt]
 :   'while' '(' (expression_list ';')? expression ')' statement
 ;
 
 
 
-do_statement
+do_statement returns[lang.Statement stmt]
 :   'do' statement 'while' '(' expression ')' ';'
 ;
 
 
 
-for_statement
+for_statement returns[lang.Statement stmt]
 :   'for' '(' expression_list? ';' expression? ';' expression_list? ')' statement
 ;
 
@@ -58,7 +84,7 @@ empty_statement
 
 
 
-block
+block returns[lang.Statement stmt]
 :   '{' statement* '}'
 ;
 

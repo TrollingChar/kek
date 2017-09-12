@@ -28,6 +28,76 @@ public interface KekListener extends ParseTreeListener {
 	 */
 	void exitStatement(KekParser.StatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link KekParser#expression_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpression_statement(KekParser.Expression_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#expression_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpression_statement(KekParser.Expression_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KekParser#if_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf_statement(KekParser.If_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#if_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf_statement(KekParser.If_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KekParser#while_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_statement(KekParser.While_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#while_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_statement(KekParser.While_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KekParser#do_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterDo_statement(KekParser.Do_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#do_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitDo_statement(KekParser.Do_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KekParser#for_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterFor_statement(KekParser.For_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#for_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitFor_statement(KekParser.For_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KekParser#empty_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterEmpty_statement(KekParser.Empty_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#empty_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitEmpty_statement(KekParser.Empty_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KekParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlock(KekParser.BlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlock(KekParser.BlockContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link KekParser#expression}.
 	 * @param ctx the parse tree
 	 */
