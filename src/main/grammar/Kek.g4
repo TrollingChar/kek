@@ -17,7 +17,8 @@ statement returns[lang.Statement stmt]
 
 
 expression returns[lang.expr.Expression expr]
-:   primary_expression
+:   pe=primary_expression
+    { $expr = $pe.expr; }
 
 //|   e=expression '.' ID
 //    { $expr = lang.expr.Expression.memberAccess($e.expr, $ID.getText()); }
@@ -52,7 +53,8 @@ expression returns[lang.expr.Expression expr]
 |   <assoc=right> l=expression '||' r=expression
     { $expr = lang.expr.Expression.operator(lang.Operator.OR, $l.expr, $r.expr); }
 
-|   <assoc=right> primary_expression '.' ID '=' e=expression
+|   <assoc=right> pe=primary_expression '.' ID '=' e=expression
+    { $expr = lang.expr.Expression.setter($pe.expr, $ID.getText(), $e.expr); }
     /*
     velocity.x = 0;
     getVelocity().x = 0;
@@ -62,8 +64,8 @@ expression returns[lang.expr.Expression expr]
 |   <assoc=right> ID '=' e=expression
     { $expr = lang.expr.Expression.setter($ID.getText(), $e.expr); }
 
-|   <assoc=right> ID ':=' e=expression
-    { $expr = lang.expr.Expression.setter($ID.getText(), $e.expr); }
+//|   <assoc=right> ID ':=' e=expression
+//    { $expr = lang.expr.Expression.setter($ID.getText(), $e.expr); }
 
 //|   <assoc=right> ID ':=' e=expression
 //    { $expr = new ($ID.getText(), $e.expr); }
@@ -75,18 +77,33 @@ primary_expression returns[lang.expr.Expression expr]
 :   '(' e=expression ')'
     { $expr = $e.expr; }
 
-|   primary_expression '.' ID
-|   primary_expression '?.' ID
-|   primary_expression '(' expression_list? ')'
-|   primary_expression '?(' expression_list? ')'
-|   primary_expression '[' expression_list? ']'
-|   primary_expression '?[' expression_list? ']'
+|   pe=primary_expression '.' ID
+    { $expr = lang.expr.Expression.memberAccess($pe.expr, $ID.getText()); }
+
+|   pe=primary_expression '(' l=expression_list? ')'
+    {
+        lang.ExpressionList elist;
+        try {
+            elist = $l.elist;
+        }
+        catch (NullPointerException e) {
+            elist = new lang.ExpressionList();
+        }
+        $expr = lang.expr.Expression.invokation($pe.expr, elist);
+    }
 
 |   ID
     { $expr = lang.expr.Expression.getter($ID.getText()); }
 
 |   INT
     { $expr = lang.expr.Expression.constant($INT.getText()); }
+;
+
+
+
+expression_list returns[lang.ExpressionList elist]
+:   l=expression        { $elist = new lang.ExpressionList($l.expr); }
+    (',' r=expression)* { $elist.add($r.expr); }
 ;
 
 

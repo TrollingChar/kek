@@ -1,5 +1,6 @@
 package lang.expr;
 
+import lang.ExpressionList;
 import lang.Operator;
 
 public abstract class Expression {
@@ -29,6 +30,14 @@ public abstract class Expression {
 
     public static Expression memberAccess(Expression expr, String member) {
         return new MemberAccessExpression(expr, member);
+    }
+
+    public static Expression setter(Expression primary, String property, Expression expression) {
+        return null;
+    }
+
+    public static Expression invokation(Expression expression, ExpressionList expressionList) {
+        return new InvokationExpression(expression, expressionList);
     }
 }
 

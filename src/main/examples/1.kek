@@ -48,3 +48,11 @@ but invocations - a() - should not.
 also, there are ++ and -- which also should trigger getters and setters
 
 */
+
+
+
+//
+tangent = normal.Rotated90CW();
+convertedVelocity = ConvertToBasis(velocity, tangent, normal);
+
+value = tangent * tangentialBounce * convertedVelocity.X - normal * normalBounce * convertedVelocity.Y;

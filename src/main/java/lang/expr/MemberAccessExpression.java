@@ -14,6 +14,6 @@ public class MemberAccessExpression extends Expression {
 
     @Override
     public String toString() {
-        return String.format(". %s %s", expression.toString(), member);
+        return String.format("(. %s %s)", expression.toString(), member);
     }
 }

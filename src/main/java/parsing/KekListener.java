@@ -48,6 +48,16 @@ public interface KekListener extends ParseTreeListener {
 	 */
 	void exitPrimary_expression(KekParser.Primary_expressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link KekParser#expression_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpression_list(KekParser.Expression_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KekParser#expression_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpression_list(KekParser.Expression_listContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link KekParser#prefix_operator}.
 	 * @param ctx the parse tree
 	 */
