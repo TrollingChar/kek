@@ -6,7 +6,7 @@
 
     <groupId>com.vk.rodin_noob</groupId>
     <artifactId>kek</artifactId>
-    <version>0.2d</version>
+    <version>0.3d</version>
 
     <build>
         <plugins>
