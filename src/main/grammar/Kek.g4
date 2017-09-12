@@ -22,6 +22,59 @@ statement returns[lang.Statement stmt]
 
 
 
+if_statement
+:   'if' '(' (expression_list ';')? expression ')' statement ('else' statement)?
+;
+
+
+
+switch_statement
+:   todo
+;
+
+
+
+while_statement
+:   'while' '(' (expression_list ';')? expression ')' statement
+;
+
+
+
+do_statement
+:   'do' statement 'while' '(' expression ')' ';'
+;
+
+
+
+for_statement
+:   'for' '(' expression_list? ';' expression? ';' expression_list? ')' statement
+;
+
+
+
+empty_statement
+:   ';'
+;
+
+
+
+block
+:   '{' statement* '}'
+;
+
+
+
+/* todo
+    if
+    switch
+    loops
+    continue, break, return, goto
+    empty statement
+    block
+*/
+
+
+
 /**************
 * EXPRESSIONS *
 **************/
