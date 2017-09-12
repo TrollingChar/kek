@@ -9,10 +9,22 @@ file
 
 
 
+/*************
+* STATEMENTS *
+*************/
+
+
+
 statement returns[lang.Statement stmt]
 :   e=expression ';'
     { $stmt = new lang.Statement($e.expr); }
 ;
+
+
+
+/**************
+* EXPRESSIONS *
+**************/
 
 
 
@@ -108,6 +120,12 @@ expression_list returns[lang.ExpressionList elist]
 
 
 
+/************
+* OPERATORS *
+************/
+
+
+
 prefix_operator returns[lang.Operator op]
 :   '+'  { $op = lang.Operator.UNARY_PLUS; }
 |   '-'  { $op = lang.Operator.UNARY_MINUS; }
@@ -163,6 +181,12 @@ bitwise_operator returns[lang.Operator op]
 |   '^'  { $op = lang.Operator.BIT_XOR; }
 |   '&^' { $op = lang.Operator.BIT_CLEAR; }
 ;
+
+
+
+/*********
+* TOKENS *
+*********/
 
 
 
